@@ -2,9 +2,11 @@ package com.example.blog.controller;
 
 import com.example.blog.entity.Blog;
 import com.example.blog.service.BlogService;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,30 +23,30 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogController {
 
-    BlogService blogService;
+    BlogService blogService; // Dependency Injection
 
     @GetMapping("")
-    public String getAllBlogs() {
+    public List<Blog> getAllBlogs() {
         return blogService.getAllBlogs();
     }
 
     @GetMapping("/{id}")
-    public String getBlog(@PathVariable Long id) {
+    public Blog getBlog(@PathVariable Long id) {
         return blogService.getBlogById(id);
     }
 
     @PostMapping("")
-    public String addBlog(@RequestBody Blog blog) {
+    public Blog addBlog(@RequestBody Blog blog) {
         return blogService.createBlog(blog);
     }
 
     @PutMapping("/{id}")
-    public String updateBlog(@PathVariable Long id, @RequestBody Blog blog) {
+    public Blog updateBlog(@PathVariable Long id, @RequestBody Blog blog) {
         return blogService.updateBlog(id, blog);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteBlog(@PathVariable Long id) {
-        return blogService.deleteBlog(id);
+    public void deleteBlog(@PathVariable Long id) {
+         blogService.deleteBlog(id);
     }
 }
