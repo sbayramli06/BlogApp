@@ -1,28 +1,34 @@
 package com.example.blog.service;
 
 import com.example.blog.entity.Blog;
+import com.example.blog.repository.BlogRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BlogService {
 
-    public String getAllBlogs() {
-        return "Hello World";
+    BlogRepository blogRepository;
+
+    public List<Blog> getAllBlogs() {
+        return blogRepository.findAll();
     }
 
-    public String getBlogById(Long id) {
-        return "Hello World";
+    public Blog getBlogById(Long id) {
+        return blogRepository.findById(id).orElse(null);
     }
 
-    public String createBlog(Blog blog) {
-        return "Hello World";
+    public Blog createBlog(Blog blog) {
+        return blogRepository.save(blog);
     }
 
-    public String updateBlog(Long id, Blog blog) {
-        return "Hello World";
+    public Blog updateBlog(Long id, Blog blog) {
+        return blogRepository.findById(id).orElse(null);
     }
 
-    public String deleteBlog(Long id) {
-        return "Hello World";
+    public void deleteBlog(Long id) {
+        blogRepository.deleteById(id);
     }
 }
